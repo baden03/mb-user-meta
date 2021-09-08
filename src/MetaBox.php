@@ -15,6 +15,9 @@ class MetaBox extends \RW_Meta_Box {
 		add_action( 'profile_update', array( $this, 'save_post' ) );
 		add_action( 'user_register', array( $this, 'save_post' ) );
 
+		// Allow user meta fields to be used by other plugins and with other post types
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+
 		add_action( "rwmb_before_{$this->meta_box['id']}", array( $this, 'show_heading' ) );
 	}
 
@@ -36,7 +39,9 @@ class MetaBox extends \RW_Meta_Box {
 			return false;
 		}
 		$screen = get_current_screen();
-		return in_array( $screen->id, ['profile', 'user-edit', 'profile-network', 'user-edit-network'], true );
+		// Allow edit screens to be expanded
+		$edit_screens = apply_filters( 'rwmb_user_edit_screens', array( 'profile', 'user-edit', 'profile-network', 'user-edit-network' ) );
+		return in_array( $screen->id, $edit_screens, true );
 	}
 
 	public function get_current_object_id() {
