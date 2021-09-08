@@ -1,2 +1,2 @@
 # mb-user-meta
-Expanding Metabox User Meta to work with other post types
+Expanding the Metabox User Meta plugin to work with post types other than just _user_ as detailed in the support forum thread [Expanding User Meta to work with other post types](https://metabox.io/support/topic/expanding-user-meta-to-work-with-other-post-types/).
