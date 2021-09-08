@@ -44,17 +44,24 @@ class MetaBox extends \RW_Meta_Box {
 		return in_array( $screen->id, $edit_screens, true );
 	}
 
+	//nope, just return the current user id
 	public function get_current_object_id() {
+		return self::get_current_user_id();
+	}
+
+	//get_current_user to be based on user_id variable
+	public static function get_current_user_id() {
 		if ( ! is_admin() ) {
 			return false;
 		}
-		$screen = get_current_screen();
-		if ( in_array( $screen->id, ['profile', 'profile-network'], true ) ) {
+   
+		if( !empty( $_REQUEST['user_id'] )){
+			return absint( $_REQUEST['user_id'] );
+		}
+		else if( get_current_user_id() ){
 			return get_current_user_id();
 		}
-		if ( in_array( $screen->id, ['user-edit', 'user-edit-network'], true ) ) {
-			return isset( $_REQUEST['user_id'] ) ? absint( $_REQUEST['user_id'] ) : false;
-		}
+   
 		return false;
 	}
 
